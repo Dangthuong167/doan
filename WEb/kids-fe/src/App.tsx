@@ -19,6 +19,7 @@ import Categories from "./pages/admin/categories/categories";
 import CategoriesForm from "./pages/admin/categories/categories-form";
 import Tags from "./pages/admin/tags/tags";
 import TagsForm from "./pages/admin/tags/tagsForm";
+import ProductsPage from "./pages/user/ProductsPage"; // <-- import page mới
 
 function App() {
   const dispatch = useAppDispatch();
@@ -63,32 +64,36 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/admin" element={<Admin />}>
-            <Route index element={<Dashboard />} />
-            <Route path="product-list" element={<ProductList />} />
-            <Route path="user-list" element={<UserList />} />
-            <Route path="category-list" element={<Categories />} />
-            <Route path="category-form" element={<CategoriesForm />} />
-            <Route path="category-form/:id" element={<CategoriesForm />} />
-            <Route path="shipping" element={<Shipping />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="tag-list" element={<Tags />} />
-            <Route path="tag-form" element={<TagsForm />} />
-            <Route path="tag-form/:id" element={<TagsForm />} />
-          </Route>
-        </Route>
+     <Routes>
+  <Route path="/" element={<Home />} />
 
-        {/* Add more routes here as needed */}
-        <Route element={<PublicRoute />}>
-          <Route path="/login" element={<Login />} />
-        </Route>
+  {/* Products page */}
+  <Route path="/products" element={<ProductsPage />} />
 
-        {/* Catch-all route for 404 */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+  <Route element={<ProtectedRoute />}>
+    <Route path="/admin" element={<Admin />}>
+      <Route index element={<Dashboard />} />
+      <Route path="product-list" element={<ProductList />} />
+      <Route path="user-list" element={<UserList />} />
+      <Route path="category-list" element={<Categories />} />
+      <Route path="category-form" element={<CategoriesForm />} />
+      <Route path="category-form/:id" element={<CategoriesForm />} />
+      <Route path="shipping" element={<Shipping />} />
+      <Route path="profile" element={<Profile />} />
+      <Route path="tag-list" element={<Tags />} />
+      <Route path="tag-form" element={<TagsForm />} />
+      <Route path="tag-form/:id" element={<TagsForm />} />
+    </Route>
+  </Route>
+
+  <Route element={<PublicRoute />}>
+    <Route path="/login" element={<Login />} />
+  </Route>
+
+  {/* Catch-all route for 404 */}
+  <Route path="*" element={<NotFound />} />
+</Routes>
+
 
       {/* Toast container */}
       <div

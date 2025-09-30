@@ -8,12 +8,8 @@ import { signin } from "../redux/authSlice";
 
 const schema = yup
   .object({
-    email: yup.string().required().email("Email khong hop le! "),
-    // .test("custom", "Email khong hop le", (value, context) => {
-    //   console.log(value, context);
-    //   return value === "jimmy";
-    // }),
-    password: yup.string().required().min(6),
+    email: yup.string().required().email("Email không hợp lệ!"),
+    password: yup.string().required().min(6, "Mật khẩu tối thiểu 6 ký tự"),
     isRemember: yup.boolean().required(),
   })
   .required();
@@ -25,9 +21,7 @@ const Login = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: {
-      isRemember: false,
-    },
+    defaultValues: { isRemember: false },
   });
 
   const dispatch = useAppDispatch();
@@ -37,87 +31,81 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#e5dbfa]">
-      <div className="bg-white rounded-3xl shadow-xl flex flex-col md:flex-row w-full max-w-4xl overflow-hidden">
-        {/* Left: Illustration & Logo */}
-        <div className="md:w-1/2 flex flex-col items-center justify-center bg-[#f3f1fe] p-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white rounded-2xl shadow-md flex flex-col md:flex-row w-full max-w-4xl overflow-hidden">
+        {/* Bên trái: hình sản phẩm nổi bật */}
+        <div className="md:w-1/2 flex flex-col items-center justify-center bg-gray-50 p-6">
           <img
-            src="https://phpstack-1384472-5196432.cloudwaysapps.com/assets/images/logo/1.png"
-            alt="Logo"
-            className="h-12 mb-8"
-          />
-          <img
-            src="https://phpstack-1384472-5196432.cloudwaysapps.com/assets/images/login/01.png"
-            alt="Teamwork"
+            src="https://cdn.mos.cms.futurecdn.net/h4utvXjD2QUoB4jQKoRQ6Y.jpg"
+            alt="Điện thoại nổi bật"
             className="w-80 max-w-full"
           />
-        </div>
-        {/* Right: Login Form */}
-        <div className="md:w-1/2 flex flex-col justify-center p-8">
-          <h2 className="text-3xl font-bold text-[#3d2176] mb-2">
-            Welcome To axelit!
-          </h2>
-          <p className="text-gray-500 mb-6">
-            Sign in with your data that you entered during your registration
+          <h1 className="text-xl font-bold mt-4">Mobile Shop</h1>
+          <p className="text-gray-500 text-sm">
+            Đăng nhập để mua sắm nhanh hơn
           </p>
-          {/* FORM */}
+        </div>
+
+        {/* Bên phải: form đăng nhập */}
+        <div className="md:w-1/2 flex flex-col justify-center p-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            Đăng nhập tài khoản
+          </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label className="block text-gray-700 mb-1">Email</label>
               <input
                 {...register("email")}
                 type="text"
-                placeholder="Enter Your Username"
-                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#bba6f8] bg-white"
+                placeholder="Nhập email"
+                className="w-full px-4 py-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <p>{errors.email?.message}</p>
+              <p className="text-red-500 text-sm">{errors.email?.message}</p>
             </div>
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="text-gray-700">Password</label>
-                <a href="#" className="text-[#3d2176] text-sm hover:underline">
-                  Forgot Password ?
+                <label className="text-gray-700">Mật khẩu</label>
+                <a href="#" className="text-blue-600 text-sm hover:underline">
+                  Quên mật khẩu?
                 </a>
               </div>
               <input
                 {...register("password")}
                 type="password"
-                placeholder="Enter Your Password"
-                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#bba6f8] bg-white"
+                placeholder="Nhập mật khẩu"
+                className="w-full px-4 py-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-              <p>{errors.password?.message}</p>
+              <p className="text-red-500 text-sm">{errors.password?.message}</p>
             </div>
             <div className="flex items-center">
               <input
                 {...register("isRemember")}
                 type="checkbox"
                 id="remember"
-                className="mr-2 accent-[#bba6f8]"
+                className="mr-2 accent-blue-500"
               />
               <label htmlFor="remember" className="text-gray-600 text-sm">
-                Remember me
+                Ghi nhớ đăng nhập
               </label>
             </div>
             <button
               type="submit"
-              className="w-full bg-[#bba6f8] hover:bg-[#a08be6] text-white font-bold py-3 rounded-full transition"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded transition"
             >
-              Sign In
+              Đăng nhập
             </button>
           </form>
 
           <div className="mt-4 text-sm text-gray-600">
-            Don't Have Your Account yet?{" "}
-            <a
-              href="#"
-              className="text-[#3d2176] font-semibold hover:underline"
-            >
-              Sign up
+            Chưa có tài khoản?{" "}
+            <a href="/register" className="text-blue-600 font-semibold hover:underline">
+              Đăng ký ngay
             </a>
           </div>
+
           <div className="flex items-center my-6">
             <div className="flex-1 h-px bg-gray-200" />
-            <span className="mx-3 text-gray-400 text-sm">Or sign in with</span>
+            <span className="mx-3 text-gray-400 text-sm">Hoặc đăng nhập với</span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
           <div className="flex justify-center gap-4">
