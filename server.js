@@ -1,4 +1,4 @@
-// server.js
+
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -29,7 +29,7 @@ try {
 
 // route mặc định
 app.get("/", (req, res) => {
-  res.send("hello world hahah");
+  res.send("");
 });
  
 app.use("/users", userRoutes);

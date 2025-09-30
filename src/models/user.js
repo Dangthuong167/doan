@@ -1,37 +1,53 @@
-// src/models/user.js
-import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import { Model, DataTypes } from "sequelize";
 
-const User = sequelize.define("User", {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  username: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
-    unique: true,
-  },
-  email: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true,
+export default (sequelize) => {
+  class User extends Model {
+    static associate(models) {
+      this.hasOne(models.RefreshToken, { foreignKey: "userId" });
+      this.hasOne(models.Profile, { foreignKey: "userId" });
+      this.hasMany(models.Order, { foreignKey: "userId" });
+      this.belongsToMany(models.Role, { through: "user_roles" });
+    }
+  }
+
+  User.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4, // Auto-generates a UUID
+        primaryKey: true,
+        allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      passwordHash: {
+        type: DataTypes.STRING,
+      },
     },
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  role: {
-    type: DataTypes.ENUM("user", "admin"),
-    defaultValue: "user",
-  },
-}, {
-  tableName: "users",
-  timestamps: true,
-});
+    {
+      sequelize, // truyền kết nối
+      modelName: "User", // tên model
+      tableName: "users",
+      timestamps: true,
+      // 👇 This hides passwordHash from queries by default
+      defaultScope: {
+        attributes: { exclude: ["passwordHash", "refreshToken"] },
+      },
+      // Optional: allow an "includeSensitive" scope if you need the password
+      scopes: {
+        withPassword: {
+          attributes: {},
+        },
+      },
+    }
+  );
 
-export default User;
+  return User;
+};
