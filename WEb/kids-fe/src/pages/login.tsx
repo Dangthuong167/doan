@@ -40,7 +40,7 @@ const Login = () => {
             alt="Điện thoại nổi bật"
             className="w-80 max-w-full"
           />
-          <h1 className="text-xl font-bold mt-4">Mobile Shop</h1>
+          <h3 className="text-xl font-bold mt-4">Mobile Shop</h3>
           <p className="text-gray-500 text-sm">
             Đăng nhập để mua sắm nhanh hơn
           </p>

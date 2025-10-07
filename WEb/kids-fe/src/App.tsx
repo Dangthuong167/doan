@@ -20,7 +20,8 @@ import CategoriesForm from "./pages/admin/categories/categories-form";
 import Tags from "./pages/admin/tags/tags";
 import TagsForm from "./pages/admin/tags/tagsForm";
 import ProductsPage from "./pages/user/ProductsPage"; // <-- import page mới
-
+import CheckoutPage from "./pages/user/CheckoutPage";
+import CartPage from "./pages/user/CartPage";
 function App() {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
@@ -66,7 +67,8 @@ function App() {
     <>
      <Routes>
   <Route path="/" element={<Home />} />
-
+<Route path="/checkout" element={<CheckoutPage />} />
+<Route path="/cart" element={<CartPage />} />
   {/* Products page */}
   <Route path="/products" element={<ProductsPage />} />
 
@@ -83,6 +85,8 @@ function App() {
       <Route path="tag-list" element={<Tags />} />
       <Route path="tag-form" element={<TagsForm />} />
       <Route path="tag-form/:id" element={<TagsForm />} />
+      
+
     </Route>
   </Route>
 
