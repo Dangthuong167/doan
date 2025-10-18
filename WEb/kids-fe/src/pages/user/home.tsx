@@ -87,23 +87,6 @@ function Home() {
     p.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 🧠 HÀM THÊM VÀO GIỎ + CHUYỂN HƯỚNG
-  const handleAddToCart = (product: any) => {
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    const existing = cart.find((item: any) => item.id === product.id);
-
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1 });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    alert("✅ Đã thêm vào giỏ hàng!");
-    navigate("/cart"); // 👉 Chuyển sang trang giỏ hàng
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white font-sans">
       {/* Topbar */}
@@ -116,9 +99,7 @@ function Home() {
           <span>|</span>
           <span className="hidden sm:inline">Đà Nẵng</span>
           <span>|</span>
-          {!user ? 
-          (
-            
+          {!user ? (
             <Link to="/login" className="underline">
               Đăng nhập
             </Link>
@@ -134,7 +115,6 @@ function Home() {
               Đăng xuất
             </button>
           )}
-          
 
           <Link to="/admin" className="underline ml-2">
             Admin
@@ -155,7 +135,9 @@ function Home() {
           />
           <div>
             <div className="font-bold text-3xl text-indigo-700">Mobile Shop</div>
-            <div className="text-xs text-gray-500">Hot deals – New arrivals</div>
+            <div className="text-xs text-gray-500">
+              Hot deals – New arrivals
+            </div>
           </div>
         </div>
         <nav className="flex-1 flex items-center gap-6 ml-6 justify-center">
@@ -183,7 +165,9 @@ function Home() {
           <h1 className="text-4xl font-extrabold mb-4">
             Điện thoại chính hãng – Ưu đãi khủng
           </h1>
-          <p className="text-lg mb-6">Mua smartphone – Giao hàng nhanh – Trả góp 0%</p>
+          <p className="text-lg mb-6">
+            Mua smartphone – Giao hàng nhanh – Trả góp 0%
+          </p>
           <button className="px-8 py-3 bg-white text-indigo-700 font-semibold rounded-full shadow hover:bg-gray-100 transition">
             Mua ngay
           </button>
@@ -222,20 +206,25 @@ function Home() {
               <div className="text-yellow-500 text-xs mt-2">
                 ★ {product.rating} ({product.reviews} đánh giá)
               </div>
-              <div className="mt-4 flex gap-2 w-full">
-                <button className="flex-1 bg-gray-100 py-2 rounded-full hover:bg-gray-200 transition">
-                  Xem chi tiết
-                </button>
-                <button
-  className="flex-1 bg-orange-400 text-white py-2 rounded-full hover:bg-orange-500 transition"
-  onClick={() => {
-    addToCart(product);
-    navigate("/cart");
-  }}
->
-  Thêm vào giỏ
-</button>
 
+              {/* Nút xem chi tiết có liên kết đến /product/:id */}
+              <div className="mt-4 flex gap-2 w-full">
+                                <Link
+                  to={`/product/${product.id}`}
+                  className="flex-1 bg-gray-100 py-2 rounded-full hover:bg-gray-200 transition text-center"
+                >
+                  Xem chi tiết
+                </Link>
+
+                <button
+                  className="flex-1 bg-orange-400 text-white py-2 rounded-full hover:bg-orange-500 transition"
+                  onClick={() => {
+                    addToCart(product);
+                    navigate("/cart");
+                  }}
+                >
+                  Thêm vào giỏ
+                </button>
               </div>
             </div>
           ))}

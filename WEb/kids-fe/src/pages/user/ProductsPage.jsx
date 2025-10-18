@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 
 const productsData = [
@@ -16,6 +17,7 @@ function ProductsPage() {
   const [search, setSearch] = useState("");
   const [brandFilter, setBrandFilter] = useState("All");
   const [priceFilter, setPriceFilter] = useState("All");
+  const navigate = useNavigate();
 
   const formatVND = (value) =>
     value.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
@@ -31,6 +33,21 @@ function ProductsPage() {
 
     return matchesSearch && matchesBrand && matchesPrice;
   });
+
+  const handleAddToCart = (product) => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existing = cart.find((item) => item.id === product.id);
+
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Đã thêm sản phẩm vào giỏ hàng!");
+    navigate("/cart");
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -93,7 +110,10 @@ function ProductsPage() {
               {formatVND(product.price)}
             </div>
             <div className="text-sm text-gray-500">{product.brand}</div>
-            <button className="mt-3 w-full bg-orange-400 text-white py-2 rounded-full hover:bg-orange-500 transition">
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="mt-3 w-full bg-orange-400 text-white py-2 rounded-full hover:bg-orange-500 transition"
+            >
               Thêm vào giỏ
             </button>
           </div>

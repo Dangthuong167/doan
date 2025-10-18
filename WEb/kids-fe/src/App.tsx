@@ -22,6 +22,9 @@ import TagsForm from "./pages/admin/tags/tagsForm";
 import ProductsPage from "./pages/user/ProductsPage"; // <-- import page mới
 import CheckoutPage from "./pages/user/CheckoutPage";
 import CartPage from "./pages/user/CartPage";
+import Register from "./pages/user/Register";
+import ProductDetail from "./pages/user/ProductDetail";
+
 function App() {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
@@ -92,6 +95,9 @@ function App() {
 
   <Route element={<PublicRoute />}>
     <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} /> {/* thêm dòng này */}
+      <Route path="/product/:id" element={<ProductDetail />} />
+
   </Route>
 
   {/* Catch-all route for 404 */}
