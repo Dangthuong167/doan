@@ -2,15 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 
+
 const productsData = [
-  { id: 1, name: "iPhone 14 Pro", price: 30000000, brand: "Apple", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone14-pro-model-select-202209-6-1inch_GEO_EMEA?wid=400&hei=400&fmt=jpeg" },
-  { id: 2, name: "Samsung Galaxy S23", price: 24000000, brand: "Samsung", image: "https://images.samsung.com/is/image/samsung/p6pim/vn/sm-s911bzageub/gallery/vn-galaxy-s23-s911-451233-sm-s911bzageub-534850960?$684_547_PNG$" },
-  { id: 3, name: "iPad Air", price: 18000000, brand: "Apple", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/ipad-air-select-wifi-spacegray-202203?wid=400&hei=400&fmt=jpeg" },
-  { id: 4, name: "Apple Watch Ultra", price: 21000000, brand: "Apple", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MNFD3_VW_PF+watch-49-titanium-ultra-cell-202209?wid=400&hei=400&fmt=jpeg" },
-  { id: 5, name: "MacBook Air M2", price: 32000000, brand: "Apple", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=400&hei=400&fmt=jpeg" },
-  { id: 6, name: "Samsung Galaxy Z Flip 5", price: 28000000, brand: "Samsung", image: "https://images.samsung.com/is/image/samsung/p6pim/vn/230801_gallery_galaxyzflip5-cream_front_h_l30?$684_547_PNG$" },
-  { id: 7, name: "Xiaomi 13 Pro", price: 19000000, brand: "Xiaomi", image: "https://cdn.tgdd.vn/Products/Images/42/274420/xiaomi-13-pro-den-thumb-600x600.jpg" },
-  { id: 8, name: "Oppo Find X6 Pro", price: 22000000, brand: "Oppo", image: "https://cdn.tgdd.vn/Products/Images/42/302235/oppo-find-x6-pro-thumb-600x600.jpg" },
+  { id: 1, name: "iPhone 17 Pro Max", price: 30000000, brand: "Apple", image:"https://images.macrumors.com/t/Pi-mBNronBGf4PKHlQR2WtmQK2w=/1600x0/article-new/2025/02/iphone-17-pro-asherdipps.jpg"},
+  { id: 2, name: "iPhone 16 Pro Max", price: 30000000, brand: "Apple", image:"https://cdn.xtmobile.vn/vnt_upload/news/04_2024/04/iphone-16-pro-max-gia-bao-nhieu-xtmobile.jpg"},
+  { id: 3, name: "iPhone 15 Pro Max", price: 30000000, brand: "Apple", image:"https://cdn.tgdd.vn/Products/Images/42/305658/Slider/iphone-15-pro-max-thumb-youtube-1020x570.jpg"},
+  { id: 4, name: "iPhone 14 Pro Max", price: 30000000, brand: "Apple", image:"https://minhtuanmobile.com/uploads/products/220908114903-iphone-14-pro-max-1tb2.jpg"},
+  { id: 5, name: "iPhone 13 Pro Max", price: 30000000, brand: "Apple", image:"https://cdn.tgdd.vn/Products/Images/42/230529/iphone-13-pro-max-xanh-la-thumb-600x600.jpg"},
+  { id: 6, name: "Samsung Galaxy S23", price: 24000000, brand: "Samsung", image: "https://cdn.mos.cms.futurecdn.net/3dn8mWLUeYn279a3wsAt7d-970-80.jpg.webp"},
+  { id: 7, name: "iPad Air", price: 18000000, brand: "Apple", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/ipad-air-select-wifi-spacegray-202203?wid=400&hei=400&fmt=jpeg" },
+  { id: 8, name: "Apple Watch Ultra", price: 21000000, brand: "Apple", image: "https://www.apple.com/newsroom/images/2023/09/apple-unveils-apple-watch-ultra-2/article/Apple-Watch-Ultra-2-hero-230912_Full-Bleed-Image.jpg.xlarge_2x.jpg"},
+  { id: 9, name: "MacBook Air M2", price: 32000000, brand: "Apple", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=400&hei=400&fmt=jpeg" },
+  { id: 10, name: "Samsung Galaxy Z Flip 5", price: 28000000, brand: "Samsung", image: "https://clickbuy.com.vn/uploads/pro/samsung-galaxy-z-flip5-8gb-256gb-chinh-hang-lg-192508.jpg"},
+  { id: 11, name: "Xiaomi 13 Pro", price: 19000000, brand: "Xiaomi", image: "https://cdn.tgdd.vn/Products/Images/42/282903/Slider/xiaomi-13-pro-thumb-yt-1020x570.jpg"},
+  { id: 12, name: "Oppo Find X6 Pro", price: 22000000, brand: "Oppo", image: "https://didongviet.vn/dchannel/wp-content/uploads/2022/11/1cau-hinh-oppo-find-x6-pro-co-gi-moi-didongviet@2x.jpg"},
 ];
 
 function ProductsPage() {

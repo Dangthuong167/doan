@@ -30,10 +30,10 @@ function FooterExtra() {
             Phương thức thanh toán
           </h4>
           <div className="flex flex-wrap gap-2 mt-2">
-            <img src="https://cdn.cellphones.com.vn/media/logo-payment/apple-pay.png" alt="Apple Pay" className="h-6" />
-            <img src="https://cdn.cellphones.com.vn/media/logo-payment/vnpay.png" alt="VNPAY" className="h-6" />
-            <img src="https://cdn.cellphones.com.vn/media/logo-payment/momo.png" alt="Momo" className="h-6" />
-            <img src="https://cdn.cellphones.com.vn/media/logo-payment/zalopay.png" alt="ZaloPay" className="h-6" />
+            <img src="https://images.seeklogo.com/logo-png/48/2/apple-pay-acceptance-mark-logo-png_seeklogo-480102.png" alt="Apple Pay" className="h-6" />
+            <img src="https://thuonghieumanh.vneconomy.vn/upload/vnpay.png" alt="VNPAY" className="h-6" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCp0JctwLH5Hgagb0TY-xvAuWK2NCGU4fZgQ&s" alt="Momo" className="h-6" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwPynD27LbXlPsbofv1AX-5ZXDn_XMGo-1TA&s" alt="ZaloPay" className="h-6" />
           </div>
         </div>
 
@@ -119,7 +119,7 @@ function FooterExtra() {
 
       {/* Footer bottom */}
       <div className="text-center text-gray-500 text-xs border-t py-4">
-        © 2025 Mobile Shop - Giao diện mô phỏng CellphoneS
+        © 2025 Mobile Shop 
       </div>
     </div>
   );

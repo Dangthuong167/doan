@@ -14,10 +14,14 @@ import {
   FaUserCog,
   FaShippingFast,
   FaTags,
+  FaSignOutAlt,
 } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import type { Menu } from "../types/menu";
 import type { TAny } from "../types/common";
+import { AuthService } from "../services/authService";
+import { useAppDispatch } from "../hooks";
+import { clearAuth } from "../redux/authSlice";
 
 type AdminLayoutProps = {
   children: ReactNode;
@@ -74,6 +78,31 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [menus, setMenus] = useState(menu);
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  // ✅ Sửa hoàn chỉnh hàm đăng xuất
+  const handleLogout = async () => {
+    try {
+      await AuthService.signout();
+
+      // Xóa token và user trong localStorage
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("me");
+
+      // Reset redux state
+      dispatch(clearAuth());
+
+      // Chuyển hướng về trang đăng nhập
+      navigate("/login", { replace: true });
+
+      alert("Đăng xuất thành công!");
+    } catch (error) {
+      console.error("Đăng xuất thất bại:", error);
+      alert("Không thể đăng xuất, vui lòng thử lại!");
+    }
+  };
 
   useEffect(() => {
     setMenus((prevMenus: TAny) =>
@@ -102,11 +131,13 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
           className="flex items-center gap-2 px-6 py-6 border-b border-gray-100"
         >
           <img
-            src="https://phpstack-1384472-5196432.cloudwaysapps.com/assets/images/logo/1.png"
+            src="https://insacmau.com/wp-content/uploads/2024/03/logo-dien-thoai-32.jpg"
             alt="Logo"
             className="h-8"
           />
         </Link>
+        
+
         {/* Menu */}
         <nav className="flex-1 flex flex-col px-2 py-4 overflow-y-auto">
           <ul className="space-y-1">
@@ -151,6 +182,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                       item.children.length > 0 &&
                       sidebarOpen && <FaChevronDown className="ml-2 text-xs" />}
                   </Link>
+
                   {/* Submenu */}
                   {item.children && item.children.length > 0 && sidebarOpen && (
                     <ul className="ml-10 mt-1 space-y-1">
@@ -173,6 +205,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             )}
           </ul>
         </nav>
+
         {/* Sidebar Toggle */}
         <button
           className="absolute top-4 right-[-18px] bg-white border border-gray-200 rounded-full shadow p-1 text-gray-500 hover:bg-gray-50 transition md:hidden"
@@ -204,6 +237,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               <span className="text-purple-600 font-semibold">Data Table</span>
             </div>
           </div>
+
+          {/* Right side of header */}
           <div className="flex items-center gap-4">
             <FaSearch className="text-gray-400 text-lg cursor-pointer" />
             <FaRegBell className="text-gray-400 text-lg cursor-pointer" />
@@ -211,7 +246,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               <FaRegDotCircle /> 26 <span className="text-xs">℃</span>
             </span>
             <img
-              src="https://flagcdn.com/us.svg"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/500px-Flag_of_Vietnam.svg.png"
               alt="US"
               className="w-6 h-6 rounded-full border"
             />
@@ -219,18 +254,29 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <FaCog className="text-gray-400 text-lg cursor-pointer" />
             <Link to="profile">
               <img
-                src="https://randomuser.me/api/portraits/men/32.jpg"
+                src="https://insacmau.com/wp-content/uploads/2024/03/logo-dien-thoai-32.jpg"
                 alt="User"
                 className="w-8 h-8 rounded-full border-2 border-purple-200"
               />
             </Link>
+
+            {/* ✅ Nút đăng xuất */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-3 py-2 rounded-md transition"
+            >
+              <FaSignOutAlt />
+              <span className="hidden md:inline">Đăng xuất</span>
+            </button>
           </div>
         </header>
+
         {/* Content */}
         <main className="flex-1 p-6 bg-[#f8fafd]">{children}</main>
+
         {/* Footer */}
         <footer className="bg-white text-center py-3 text-gray-500 text-sm shadow-inner">
-          Copyright © {new Date().getFullYear()} Axelit. All rights reserved
+          Mobile Shop © {new Date().getFullYear()} 
           <span className="text-pink-400 mx-1">♥</span> v1.0.0
         </footer>
       </div>

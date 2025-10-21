@@ -5,8 +5,8 @@ const productsData = [
   { id: 1, name: "iPhone 17 Pro Max", price: 30000000, brand: "Apple", desc: "Chip A16 Bionic, màn hình Super Retina XDR 6.1 inch, camera 48MP, pin 3200mAh.", image: "https://images.macrumors.com/t/Pi-mBNronBGf4PKHlQR2WtmQK2w=/1600x0/article-new/2025/02/iphone-17-pro-asherdipps.jpg"},
   { id: 2, name: "Samsung Galaxy S23", price: 24000000, brand: "Samsung", desc: "Snapdragon 8 Gen 2, camera 50MP, pin 3900mAh, màn hình Dynamic AMOLED 120Hz.", image: "https://cdn.mos.cms.futurecdn.net/3dn8mWLUeYn279a3wsAt7d-970-80.jpg.webp"},
   { id: 3, name: "iPad Air", price: 18000000, brand: "Apple", desc: "Màn hình 10.9 inch, chip M1 mạnh mẽ, hỗ trợ Apple Pencil, pin 10 tiếng.", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/ipad-air-select-wifi-spacegray-202203?wid=400&hei=400&fmt=jpeg"},
-  { id: 4, name: "MacBook Air M2", price: 32000000, brand: "Apple", desc: "Chip Apple M2, màn hình Retina 13.6 inch, pin 18 tiếng, thiết kế siêu mỏng.", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=400&hei=400&fmt=jpeg" },
-  { id: 5, name: "Oppo Find X6 Pro", price: 22000000, brand: "Oppo", desc: "Snapdragon 8 Gen 2, camera 50MP Hasselblad, sạc nhanh 100W.", image: "https://cdn.tgdd.vn/Products/Images/42/302235/oppo-find-x6-pro-thumb-600x600.jpg" },
+  { id: 4, name: "Apple Watch Ultra", price: 32000000, brand: "Apple", desc: "Chip Apple M2, màn hình Retina 13.6 inch, pin 18 tiếng, thiết kế siêu mỏng.", image: "https://www.apple.com/newsroom/images/2023/09/apple-unveils-apple-watch-ultra-2/article/Apple-Watch-Ultra-2-hero-230912_Full-Bleed-Image.jpg.xlarge_2x.jpg" },
+  { id: 5, name: "Oppo Find X6 Pro", price: 22000000, brand: "Oppo", desc: "Snapdragon 8 Gen 2, camera 50MP Hasselblad, sạc nhanh 100W.", image: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mbp14-silver-select-202310?wid=400&hei=400&fmt=jpeg" },
 ];
 
 function ProductDetail() {

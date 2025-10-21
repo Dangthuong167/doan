@@ -25,6 +25,7 @@ import CartPage from "./pages/user/CartPage";
 import Register from "./pages/user/Register";
 import ProductDetail from "./pages/user/ProductDetail";
 
+
 function App() {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();

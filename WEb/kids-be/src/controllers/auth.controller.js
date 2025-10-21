@@ -23,7 +23,7 @@ class AuthController extends BaseController {
       await this.service.createUser(newUser);
       res.json({ message: "User created" });
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error in signup:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -34,6 +34,7 @@ class AuthController extends BaseController {
       const user = await this.service.getUserByEmail(email, true);
       if (!user)
         return res.status(400).json({ message: "Invalid credentials" });
+
       const valid = await bcrypt.compare(password, user.passwordHash);
       if (!valid)
         return res.status(400).json({ message: "Invalid credentials" });
@@ -42,10 +43,11 @@ class AuthController extends BaseController {
         user.id,
         !isRemember
       );
+
       this._setTokensAsCookies(res, accessToken, refreshToken);
-      res.json({ accessToken, refreshToken }); // also send in JSON for API clients
+      res.json({ accessToken, refreshToken });
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error in signin:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -61,7 +63,7 @@ class AuthController extends BaseController {
           return res.status(403).json({ message: "Invalid refresh token" });
 
         const user = await this.service.getUserById(payload.sub, true);
-        if (user?.RefreshToken?.token !== token)
+        if (!user || user.refreshToken !== token)
           return res.status(403).json({ message: "Refresh token revoked" });
 
         const { accessToken, refreshToken } = await this._generateTokens(
@@ -72,7 +74,7 @@ class AuthController extends BaseController {
         res.json({ accessToken, refreshToken });
       });
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error in refresh:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -80,14 +82,27 @@ class AuthController extends BaseController {
   async signout(req, res) {
     try {
       const userId = req.user?.id;
+
       if (userId) {
+        // Xóa refreshToken trong DB
         await this.service.updateUser(userId, { refreshToken: null }, true);
       }
-      res.clearCookie("accessToken");
-      res.clearCookie("refreshToken");
-      res.json({ message: "Signed out" });
+
+      // Xóa cookie token
+      res.clearCookie("accessToken", {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: false,
+      });
+      res.clearCookie("refreshToken", {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: false,
+      });
+
+      return res.status(200).json({ message: "Signed out successfully" });
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error in signout:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -96,7 +111,7 @@ class AuthController extends BaseController {
     try {
       res.json(req.user);
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error in getProfile:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -118,13 +133,14 @@ class AuthController extends BaseController {
       await this.service.updateUser(userId, { refreshToken }, true);
       return { accessToken, refreshToken };
     }
+
     return { accessToken };
   }
 
   _setTokensAsCookies(res, accessToken, refreshToken) {
     if (accessToken) {
       res.cookie("accessToken", accessToken, {
-        httpOnly: true, // set = false if want access from browser
+        httpOnly: true,
         sameSite: "strict",
         secure: false,
         expires: getExpiresAtFromToken(accessToken),
@@ -133,7 +149,7 @@ class AuthController extends BaseController {
 
     if (refreshToken) {
       res.cookie("refreshToken", refreshToken, {
-        httpOnly: true, // set = false if want access from browser
+        httpOnly: true,
         sameSite: "strict",
         secure: false,
         expires: getExpiresAtFromToken(refreshToken),
